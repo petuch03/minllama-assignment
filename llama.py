@@ -221,13 +221,13 @@ class LlamaLayer(nn.Module):
         # 2) Compute self-attention
         attn_output = self.attention(normed_x)
         # 3) Add residual connection
-        x += attn_output
+        out = x + attn_output
         # 4) Apply layer normalization on the output of the self-attention
-        normed_attn_output = self.ffn_norm(x)
+        normed_attn_output = self.ffn_norm(out)
         # 5) Apply the feed-forward network
         ff_output = self.feed_forward(normed_attn_output)
         # 6) Add a residual connection from the unnormalized self-attention output to the output of the feed-forward network
-        output = x + ff_output
+        output = out + ff_output
 
         return output
 
